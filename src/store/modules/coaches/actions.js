@@ -8,9 +8,13 @@ export default {
             hourlyRate: data.rate,
             areas: data.areas
         };
-         const token = context.rootGetters.token
+
+        const token = context.rootGetters.token;
+        const url = `https://vue-http-demo-8b514-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=` + token;
+        console.log(url);
+
         const response = await fetch(
-            `https://vue-http-demo-8b514-default-rtdb.firebaseio.com/${userId}.json?auth=` + token,
+            url,
             {
                 method: 'PUT',
                 body: JSON.stringify(coachData)
@@ -32,6 +36,7 @@ export default {
         if (!payload.forceRefresh && !context.getters.shouldUpdate) {
             return;
         }
+
         const response = await fetch(
             `https://vue-http-demo-8b514-default-rtdb.firebaseio.com/coaches.json`
         );

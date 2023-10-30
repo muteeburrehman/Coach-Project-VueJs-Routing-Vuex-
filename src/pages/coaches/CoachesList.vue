@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--  '!' convert the variable to opposite value and '!!' converts a truthy value into a real true Boolean -->
     <base-dialog :show="!!error" title="An error occurred!" @close="handleError">
       <p>{{ error }}</p>
     </base-dialog>
@@ -11,7 +10,8 @@
       <base-card>
         <div class="controls">
           <base-button mode="outline" @click="loadCoaches(true)">Refresh</base-button>
-          <base-button v-if="!isCoach && !isLoading" link to="/register">Register as Coach</base-button>
+          <base-button link to="/auth?redirect=register" v-if="!isLoggedIn">Login to Register as Coach</base-button>
+          <base-button v-if="isLoggedIn && !isCoach && !isLoading" link to="/register">Register as Coach</base-button>
         </div>
         <div v-if="isLoading">
           <base-spinner></base-spinner>
@@ -54,6 +54,9 @@ export default {
     };
   },
   computed: {
+    isLoggedIn() {
+      return this.$store.getters.isAuthenticated;
+    },
     isCoach() {
       return this.$store.getters['coaches/isCoach'];
     },
@@ -86,7 +89,9 @@ export default {
     async loadCoaches(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch('coaches/loadCoaches', {forceRefresh: refresh});
+        await this.$store.dispatch('coaches/loadCoaches', {
+          forceRefresh: refresh,
+        });
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
@@ -94,7 +99,7 @@ export default {
     },
     handleError() {
       this.error = null;
-    }
+    },
   },
 };
 </script>

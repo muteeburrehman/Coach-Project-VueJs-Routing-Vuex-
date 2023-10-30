@@ -4,10 +4,9 @@ import getters from './getters.js';
 
 export default {
     namespaced: true,
-    state(){
+    state() {
         return {
-            lastFetch:null,
-            // userIsCoach: false,
+            lastFetch: null,
             coaches: [
                 {
                     id: 'c1',
@@ -15,7 +14,7 @@ export default {
                     lastName: 'Ur Rehman',
                     areas: ['frontend', 'backend', 'career'],
                     description:
-                        "I'm Muteeb Ur Rehman and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
+                        "I'm Muteeb and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
                     hourlyRate: 30
                 },
                 {
@@ -28,9 +27,9 @@ export default {
                     hourlyRate: 30
                 }
             ]
-        }
+        };
     },
     mutations,
     actions,
-    getters,
-}
+    getters
+};
